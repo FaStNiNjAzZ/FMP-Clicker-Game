@@ -488,7 +488,7 @@ public class GameScript : MonoBehaviour
             autoUpgrade5Counter *= 32;
         }
 
-        autoUpgrade1Cost *= 48;
+        autoUpgrade5Cost *= 48;
     }
 
     public void PurchaseAutoUpgrade6()
