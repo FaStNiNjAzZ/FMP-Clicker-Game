@@ -117,15 +117,38 @@ public class GameScript : MonoBehaviour
     float auto8Value = 1f;
     ulong autoUpgrade8Cost = 10000000000;
 
+    //---------------------------
+    // Variables for Settings
+    //---------------------------
+
+    public GameObject scanLine;
+    bool lDMButtonCheck = false;
+    public Button buttonObject;
+    public GameObject buttonOnLDM;
+    public GameObject buttonOffLDM;
+
+    public GameObject musicSource;
+    bool musicButtonCheck = true;
+    public GameObject buttonOnMusic;
+    public GameObject buttonOffMusic;
+
+    public GameObject settingsPanel;
+    bool settingsCanvasExit = false;
+    bool settingsCanvasEnter = false;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        settingsPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         //---------------------------
         // Max Ulong Checker
         //---------------------------
@@ -289,10 +312,8 @@ public class GameScript : MonoBehaviour
         // XP Bar Stuff
         //---------------------------
 
-        xpBarValue = (Convert.ToSingle(xpValue-xpStaticValue) / Convert.ToSingle(xpLevel-xpStaticValue));
+        xpBarValue = (Convert.ToSingle(xpValue - xpStaticValue) / Convert.ToSingle(xpLevel - xpStaticValue));
         xpBar.value = xpBarValue;
-
-        Debug.Log(xpBarValue);
 
         if (xpValue >= xpLevel)
         {
@@ -363,6 +384,41 @@ public class GameScript : MonoBehaviour
         {
             autoUpgrade8CounterFloat = 0;
             counter += autoUpgrade8Counter;
+        }
+
+
+
+
+        if (settingsCanvasExit == true)
+        {
+            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
+            if (settingsPanel.transform.position.y < 1620)
+            {
+                settingsPanel.transform.Translate(Vector3.up * Time.deltaTime * 2000);
+
+            }
+
+            else if (settingsPanel.transform.position.y >= 1620)
+            {
+                settingsCanvasExit = false;
+                settingsPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
+
+            }
+
+        }
+        if (settingsCanvasEnter == true)
+        {            
+            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
+            if (settingsPanel.transform.position.y > 540)
+            {
+                settingsPanel.transform.Translate(Vector3.down * Time.deltaTime * 2000);
+            }
+
+            else if (settingsPanel.transform.position.y <= 540)
+            {
+               settingsCanvasEnter = false;
+               settingsPanel.transform.position = new Vector4((1920 / 2), 540, 0);
+            }
         }
     }
 
@@ -569,4 +625,63 @@ public class GameScript : MonoBehaviour
         cheatInputNumber = ulong.Parse(cheatInputField.text);
         counter = cheatInputNumber;
     }
+
+    //---------------------------
+    // Other Buttons
+    //---------------------------
+
+    public void LDMButton()
+    {
+        if (lDMButtonCheck == false)
+        {
+            scanLine.SetActive(false);
+            buttonOffLDM.SetActive(false);
+            buttonOnLDM.SetActive(true);
+            lDMButtonCheck = true;
+        }
+
+        else if (lDMButtonCheck == true)
+        {
+            scanLine.SetActive(true);
+            buttonOnLDM.SetActive(false);
+            buttonOffLDM.SetActive(true);
+            lDMButtonCheck = false;
+        }
+    }
+
+    public void MusicButton()
+    {
+        if (musicButtonCheck == false)
+        {
+            musicSource.SetActive(false);
+            buttonOffMusic.SetActive(false);
+            buttonOnMusic.SetActive(true);
+            musicButtonCheck = true;
+        }
+
+        else if (musicButtonCheck == true)
+        {
+            musicSource.SetActive(true);
+            buttonOnMusic.SetActive(false);
+            buttonOffMusic.SetActive(true);
+            musicButtonCheck = false;
+        }
+    }
+
+    public void ExitSettings()
+    {
+        settingsCanvasExit = true;
+        //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
+    }
+
+    public void EnterSettings()
+    {
+        settingsCanvasEnter = true;
+    }
+
+    //---------------------------
+    // Ease Functions
+    //---------------------------
+
+   
 }
