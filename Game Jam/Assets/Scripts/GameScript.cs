@@ -105,7 +105,7 @@ public class GameScript : MonoBehaviour
     ulong autoUpgrade6Counter = 0;
     float autoUpgrade6CounterFloat;
     float auto6Value = 0.75f;
-     ulong autoUpgrade6Cost = 75000000;
+    ulong autoUpgrade6Cost = 75000000;
 
     ulong autoUpgrade7Counter = 0;
     float autoUpgrade7CounterFloat;
@@ -136,18 +136,27 @@ public class GameScript : MonoBehaviour
     bool settingsCanvasExit = false;
     bool settingsCanvasEnter = false;
 
+    public GameObject upgradesPanel;
+    bool upgradesCanvasExit = false;
+    bool upgradesCanvasEnter = false;
+
+    public GameObject cheatsPanel;
+    bool cheatsCanvasExit = false;
+    bool cheatsCanvasEnter = false;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         settingsPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
+        upgradesPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
 
         //---------------------------
         // Max Ulong Checker
@@ -167,259 +176,29 @@ public class GameScript : MonoBehaviour
         // Text Updates for UI
         //---------------------------
 
-        counterText.text = Convert.ToString(counter);
-        upgradeText.text = Convert.ToString(upgradeCost);
-        increaseCountText.text = Convert.ToString(increaseCount);
-        nextLevelXPText.text = ("XP needed for next Level: " + Convert.ToString(xpLevel - xpValue));
-        levelText.text = ("Level: " + Convert.ToString(levelValue));
-        totalXPText.text = ("XP: " + Convert.ToString(xpValue));
-
-        autoUpgradeButton1Text.text = Convert.ToString(autoUpgrade1Counter + " per second");
-        autoUpgrade1CostText.text = Convert.ToString("Cost: " + autoUpgrade1Cost);
-
-        autoUpgradeButton2Text.text = Convert.ToString(autoUpgrade2Counter + " per second");
-        autoUpgrade2CostText.text = Convert.ToString("Cost: " + autoUpgrade2Cost);
-
-        autoUpgradeButton3Text.text = Convert.ToString(autoUpgrade3Counter + " per second");
-        autoUpgrade3CostText.text = Convert.ToString("Cost: " + autoUpgrade3Cost);
-
-        autoUpgradeButton4Text.text = Convert.ToString(autoUpgrade4Counter + " per second");
-        autoUpgrade4CostText.text = Convert.ToString("Cost: " + autoUpgrade4Cost);
-
-        autoUpgradeButton5Text.text = Convert.ToString(autoUpgrade5Counter + " per second");
-        autoUpgrade5CostText.text = Convert.ToString("Cost: " + autoUpgrade5Cost);
-
-        autoUpgradeButton6Text.text = Convert.ToString(autoUpgrade6Counter + " per second");
-        autoUpgrade6CostText.text = Convert.ToString("Cost: " + autoUpgrade6Cost);
-
-        autoUpgradeButton7Text.text = Convert.ToString(autoUpgrade7Counter + " per second");
-        autoUpgrade7CostText.text = Convert.ToString("Cost: " + autoUpgrade7Cost);
-
-        autoUpgradeButton8Text.text = Convert.ToString(autoUpgrade8Counter + " per second");
-        autoUpgrade8CostText.text = Convert.ToString("Cost: " + autoUpgrade8Cost);
+        TextUpdates();
 
         //---------------------------
         //Enable or Disable Upgrade Buttons
         //---------------------------
 
-        if (counter < upgradeCost)
-        {
-            multiplierButton.interactable = false;
-        }
-
-        else if (counter >= upgradeCost)
-        {
-            multiplierButton.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade1Cost)
-        {
-            autoUpgrade1Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade1Cost)
-        {
-            autoUpgrade1Button.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade2Cost)
-        {
-            autoUpgrade2Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade2Cost)
-        {
-            autoUpgrade2Button.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade3Cost)
-        {
-            autoUpgrade3Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade3Cost)
-        {
-            autoUpgrade3Button.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade4Cost)
-        {
-            autoUpgrade4Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade4Cost)
-        {
-            autoUpgrade4Button.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade5Cost)
-        {
-            autoUpgrade5Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade5Cost)
-        {
-            autoUpgrade5Button.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade6Cost)
-        {
-            autoUpgrade6Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade6Cost)
-        {
-            autoUpgrade6Button.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade7Cost)
-        {
-            autoUpgrade7Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade7Cost)
-        {
-            autoUpgrade7Button.interactable = true;
-        }
-
-        //---------------------------
-
-        if (counter < autoUpgrade8Cost)
-        {
-            autoUpgrade8Button.interactable = false;
-        }
-
-        else if (counter >= autoUpgrade8Cost)
-        {
-            autoUpgrade8Button.interactable = true;
-        }
+        InteractableChecks();
 
         //---------------------------
         // XP Bar Stuff
         //---------------------------
 
-        xpBarValue = (Convert.ToSingle(xpValue - xpStaticValue) / Convert.ToSingle(xpLevel - xpStaticValue));
-        xpBar.value = xpBarValue;
-
-        if (xpValue >= xpLevel)
-        {
-            //xpBar.maxValue = ;
-            xpStaticValue = xpValue;
-            levelValue += 1;
-            xpLevel *= 4;
-        }
+        XPBarUpdates();
 
         //---------------------------
         // Auto Upgrade Stuff
         //---------------------------
 
-        autoUpgrade1CounterFloat += Time.deltaTime;
-        autoUpgrade2CounterFloat += Time.deltaTime;
-        autoUpgrade3CounterFloat += Time.deltaTime;
-        autoUpgrade4CounterFloat += Time.deltaTime;
-        autoUpgrade5CounterFloat += Time.deltaTime;
-        autoUpgrade6CounterFloat += Time.deltaTime;
-        autoUpgrade7CounterFloat += Time.deltaTime;
-        autoUpgrade8CounterFloat += Time.deltaTime;
+        AutoUpgradeIncrementalCounter();
 
-        //auto1Value = cheatAutoSlider.value;
+        //---------------------------
 
-        if (autoUpgrade1CounterFloat >= auto1Value)
-        {
-            autoUpgrade1CounterFloat = 0;
-            counter += autoUpgrade1Counter;
-        }
-
-        if (autoUpgrade2CounterFloat >= auto2Value)
-        {
-            autoUpgrade2CounterFloat = 0;
-            counter += autoUpgrade2Counter;
-        }
-
-        if (autoUpgrade3CounterFloat >= auto3Value)
-        {
-            autoUpgrade3CounterFloat = 0;
-            counter += autoUpgrade3Counter;
-        }
-
-        if (autoUpgrade4CounterFloat >= auto4Value)
-        {
-            autoUpgrade4CounterFloat = 0;
-            counter += autoUpgrade4Counter;
-        }
-
-        if (autoUpgrade5CounterFloat >= auto5Value)
-        {
-            autoUpgrade5CounterFloat = 0;
-            counter += autoUpgrade5Counter;
-        }
-
-        if (autoUpgrade6CounterFloat >= auto6Value)
-        {
-            autoUpgrade6CounterFloat = 0;
-            counter += autoUpgrade6Counter;
-        }
-
-        if (autoUpgrade7CounterFloat >= auto7Value)
-        {
-            autoUpgrade7CounterFloat = 0;
-            counter += autoUpgrade7Counter;
-        }
-
-        if (autoUpgrade8CounterFloat >= auto8Value)
-        {
-            autoUpgrade8CounterFloat = 0;
-            counter += autoUpgrade8Counter;
-        }
-
-
-
-
-        if (settingsCanvasExit == true)
-        {
-            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
-            if (settingsPanel.transform.position.y < 1620)
-            {
-                settingsPanel.transform.Translate(Vector3.up * Time.deltaTime * 2000);
-
-            }
-
-            else if (settingsPanel.transform.position.y >= 1620)
-            {
-                settingsCanvasExit = false;
-                settingsPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
-
-            }
-
-        }
-        if (settingsCanvasEnter == true)
-        {            
-            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
-            if (settingsPanel.transform.position.y > 540)
-            {
-                settingsPanel.transform.Translate(Vector3.down * Time.deltaTime * 2000);
-            }
-
-            else if (settingsPanel.transform.position.y <= 540)
-            {
-               settingsCanvasEnter = false;
-               settingsPanel.transform.position = new Vector4((1920 / 2), 540, 0);
-            }
-        }
+        AnimationsPanelUpdates();
     }
 
     //---------------------------
@@ -608,12 +387,14 @@ public class GameScript : MonoBehaviour
 
     public void ExitUpgradeCanvas()
     {
-        upgradeCanvas.SetActive(false);
+        //upgradeCanvas.SetActive(false);
+        upgradesCanvasExit = true;
     }
 
     public void EnterUpgradeCanvas()
     {
-        upgradeCanvas.SetActive(true);
+        //upgradeCanvas.SetActive(true);
+        upgradesCanvasEnter = true;
     }
 
     //---------------------------
@@ -680,8 +461,297 @@ public class GameScript : MonoBehaviour
     }
 
     //---------------------------
-    // Ease Functions
+    // For Update()
     //---------------------------
 
+    void AutoUpgradeIncrementalCounter()
+    {
+        autoUpgrade1CounterFloat += Time.deltaTime;
+        autoUpgrade2CounterFloat += Time.deltaTime;
+        autoUpgrade3CounterFloat += Time.deltaTime;
+        autoUpgrade4CounterFloat += Time.deltaTime;
+        autoUpgrade5CounterFloat += Time.deltaTime;
+        autoUpgrade6CounterFloat += Time.deltaTime;
+        autoUpgrade7CounterFloat += Time.deltaTime;
+        autoUpgrade8CounterFloat += Time.deltaTime;
+
+        //auto1Value = cheatAutoSlider.value;
+
+        if (autoUpgrade1CounterFloat >= auto1Value)
+        {
+            autoUpgrade1CounterFloat = 0;
+            counter += autoUpgrade1Counter;
+        }
+
+        if (autoUpgrade2CounterFloat >= auto2Value)
+        {
+            autoUpgrade2CounterFloat = 0;
+            counter += autoUpgrade2Counter;
+        }
+
+        if (autoUpgrade3CounterFloat >= auto3Value)
+        {
+            autoUpgrade3CounterFloat = 0;
+            counter += autoUpgrade3Counter;
+        }
+
+        if (autoUpgrade4CounterFloat >= auto4Value)
+        {
+            autoUpgrade4CounterFloat = 0;
+            counter += autoUpgrade4Counter;
+        }
+
+        if (autoUpgrade5CounterFloat >= auto5Value)
+        {
+            autoUpgrade5CounterFloat = 0;
+            counter += autoUpgrade5Counter;
+        }
+
+        if (autoUpgrade6CounterFloat >= auto6Value)
+        {
+            autoUpgrade6CounterFloat = 0;
+            counter += autoUpgrade6Counter;
+        }
+
+        if (autoUpgrade7CounterFloat >= auto7Value)
+        {
+            autoUpgrade7CounterFloat = 0;
+            counter += autoUpgrade7Counter;
+        }
+
+        if (autoUpgrade8CounterFloat >= auto8Value)
+        {
+            autoUpgrade8CounterFloat = 0;
+            counter += autoUpgrade8Counter;
+        }  
+    }
+
+    void XPBarUpdates()
+    {
+        xpBarValue = (Convert.ToSingle(xpValue - xpStaticValue) / Convert.ToSingle(xpLevel - xpStaticValue));
+        xpBar.value = xpBarValue;
+
+        if (xpValue >= xpLevel)
+        {
+            //xpBar.maxValue = ;
+            xpStaticValue = xpValue;
+            levelValue += 1;
+            xpLevel *= 4;
+        }
+    }
+
+    void InteractableChecks()
+    {
+        if (counter < upgradeCost)
+        {
+            multiplierButton.interactable = false;
+        }
+
+        else if (counter >= upgradeCost)
+        {
+            multiplierButton.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade1Cost)
+        {
+            autoUpgrade1Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade1Cost)
+        {
+            autoUpgrade1Button.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade2Cost)
+        {
+            autoUpgrade2Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade2Cost)
+        {
+            autoUpgrade2Button.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade3Cost)
+        {
+            autoUpgrade3Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade3Cost)
+        {
+            autoUpgrade3Button.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade4Cost)
+        {
+            autoUpgrade4Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade4Cost)
+        {
+            autoUpgrade4Button.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade5Cost)
+        {
+            autoUpgrade5Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade5Cost)
+        {
+            autoUpgrade5Button.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade6Cost)
+        {
+            autoUpgrade6Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade6Cost)
+        {
+            autoUpgrade6Button.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade7Cost)
+        {
+            autoUpgrade7Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade7Cost)
+        {
+            autoUpgrade7Button.interactable = true;
+        }
+
+        //---------------------------
+
+        if (counter < autoUpgrade8Cost)
+        {
+            autoUpgrade8Button.interactable = false;
+        }
+
+        else if (counter >= autoUpgrade8Cost)
+        {
+            autoUpgrade8Button.interactable = true;
+        }
+    }
+
+    void TextUpdates()
+    {
+        counterText.text = Convert.ToString(counter);
+        upgradeText.text = Convert.ToString(upgradeCost);
+        increaseCountText.text = Convert.ToString(increaseCount);
+        nextLevelXPText.text = ("XP needed for next Level: " + Convert.ToString(xpLevel - xpValue));
+        levelText.text = ("Level: " + Convert.ToString(levelValue));
+        totalXPText.text = ("XP: " + Convert.ToString(xpValue));
+
+        autoUpgradeButton1Text.text = Convert.ToString(autoUpgrade1Counter + " per second");
+        autoUpgrade1CostText.text = Convert.ToString("Cost: " + autoUpgrade1Cost);
+
+        autoUpgradeButton2Text.text = Convert.ToString(autoUpgrade2Counter + " per second");
+        autoUpgrade2CostText.text = Convert.ToString("Cost: " + autoUpgrade2Cost);
+
+        autoUpgradeButton3Text.text = Convert.ToString(autoUpgrade3Counter + " per second");
+        autoUpgrade3CostText.text = Convert.ToString("Cost: " + autoUpgrade3Cost);
+
+        autoUpgradeButton4Text.text = Convert.ToString(autoUpgrade4Counter + " per second");
+        autoUpgrade4CostText.text = Convert.ToString("Cost: " + autoUpgrade4Cost);
+
+        autoUpgradeButton5Text.text = Convert.ToString(autoUpgrade5Counter + " per second");
+        autoUpgrade5CostText.text = Convert.ToString("Cost: " + autoUpgrade5Cost);
+
+        autoUpgradeButton6Text.text = Convert.ToString(autoUpgrade6Counter + " per second");
+        autoUpgrade6CostText.text = Convert.ToString("Cost: " + autoUpgrade6Cost);
+
+        autoUpgradeButton7Text.text = Convert.ToString(autoUpgrade7Counter + " per second");
+        autoUpgrade7CostText.text = Convert.ToString("Cost: " + autoUpgrade7Cost);
+
+        autoUpgradeButton8Text.text = Convert.ToString(autoUpgrade8Counter + " per second");
+        autoUpgrade8CostText.text = Convert.ToString("Cost: " + autoUpgrade8Cost);
+    }
+
+    void AnimationsPanelUpdates()
+    {
+        if (settingsCanvasExit == true)
+        {
+            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
+            if (settingsPanel.transform.position.y < 1620)
+            {
+                settingsPanel.transform.Translate(Vector3.up * Time.deltaTime * 2000);
+
+            }
+
+            else if (settingsPanel.transform.position.y >= 1620)
+            {
+                settingsCanvasExit = false;
+                settingsPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
+
+            }
+
+        }
+        if (settingsCanvasEnter == true)
+        {
+            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
+            if (settingsPanel.transform.position.y > 540)
+            {
+                settingsPanel.transform.Translate(Vector3.down * Time.deltaTime * 2000);
+            }
+
+            else if (settingsPanel.transform.position.y <= 540)
+            {
+                settingsCanvasEnter = false;
+                settingsPanel.transform.position = new Vector4((1920 / 2), 540, 0);
+            }
+        }
+
+        //---------------------------
+        // Upgrades Panel
+        //---------------------------
+
+        if (upgradesCanvasExit == true)
+        {
+            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
+            if (upgradesPanel.transform.position.y < 1620)
+            {
+                upgradesPanel.transform.Translate(Vector3.up * Time.deltaTime * 2000);
+
+            }
+
+            else if (upgradesPanel.transform.position.y >= 1620)
+            {
+                upgradesCanvasExit = false;
+                upgradesPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
+
+            }
+
+        }
+        if (upgradesCanvasEnter == true)
+        {
+            //settingsPanel.transform.position = new Vector4((1920 / 2), 1280, 0);
+            if (upgradesPanel.transform.position.y > 540)
+            {
+                upgradesPanel.transform.Translate(Vector3.down * Time.deltaTime * 2000);
+            }
+
+            else if (upgradesPanel.transform.position.y <= 540)
+            {
+                upgradesCanvasEnter = false;
+                upgradesPanel.transform.position = new Vector4((1920 / 2), 540, 0);
+            }
+        }
+    }
    
 }
