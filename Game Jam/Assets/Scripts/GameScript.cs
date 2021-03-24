@@ -151,6 +151,9 @@ public class GameScript : MonoBehaviour
     {
         settingsPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
         upgradesPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
+        musicButtonCheck = true;
+        MusicButton();
+
     }
 
     // Update is called once per frame
@@ -432,21 +435,22 @@ public class GameScript : MonoBehaviour
 
     public void MusicButton()
     {
-        if (musicButtonCheck == false)
-        {
-            musicSource.SetActive(false);
-            buttonOffMusic.SetActive(false);
-            buttonOnMusic.SetActive(true);
-            musicButtonCheck = true;
-        }
 
-        else if (musicButtonCheck == true)
+        if (musicButtonCheck == true)
         {
             musicSource.SetActive(true);
-            buttonOnMusic.SetActive(false);
-            buttonOffMusic.SetActive(true);
+            buttonOnMusic.SetActive(true);
+            buttonOffMusic.SetActive(false);
             musicButtonCheck = false;
         }
+
+        else if (musicButtonCheck == false)
+        {
+            musicSource.SetActive(false);
+            buttonOffMusic.SetActive(true);
+            buttonOnMusic.SetActive(false);
+            musicButtonCheck = true;
+        }   
     }
 
     public void ExitSettings()
