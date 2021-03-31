@@ -254,124 +254,59 @@ public class GameScript : MonoBehaviour
     // Buttons for Auto Uprades Canvas
     //---------------------------
 
+    void PurchaseAutoUpgradeTemp(ulong autoUpgradeCounter, ulong autoUpgradeCost, ulong autoUpgradeCounterMultiplier, ulong autoUpgradeCostMultiplier)
+    {
+        if (autoUpgradeCounter == 0)
+        {
+            autoUpgradeCounter = 1;
+        }
+
+        else if (autoUpgradeCounter != 0)
+        {
+            autoUpgradeCounter *= autoUpgradeCounterMultiplier;
+        }
+
+        autoUpgradeCost *= autoUpgradeCostMultiplier;
+    }
+
     public void PurchaseAutoUpgrade1()
     {
-        if (autoUpgrade1Counter == 0)
-        {
-            autoUpgrade1Counter = 1;
-        }
-
-        else if (autoUpgrade1Counter != 0)
-        {
-            autoUpgrade1Counter *= 2;
-        }
-
-        autoUpgrade1Cost *= 3;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 2, 3);
     }
 
     public void PurchaseAutoUpgrade2()
     {
-        if (autoUpgrade2Counter == 0)
-        {
-            autoUpgrade2Counter = 1;
-        }
-
-        else if (autoUpgrade2Counter != 0)
-        {
-            autoUpgrade2Counter *= 4;
-        }
-
-        autoUpgrade2Cost *= 6;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 4, 6);
     }
 
     public void PurchaseAutoUpgrade3()
     {
-        if (autoUpgrade3Counter == 0)
-        {
-            autoUpgrade3Counter = 1;
-        }
-
-        else if (autoUpgrade3Counter != 0)
-        {
-            autoUpgrade3Counter *= 8;
-        }
-
-        autoUpgrade3Cost *= 12;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 8, 12);
     }
 
     public void PurchaseAutoUpgrade4()
     {
-        if (autoUpgrade4Counter == 0)
-        {
-            autoUpgrade4Counter = 1;
-        }
-
-        else if (autoUpgrade4Counter != 0)
-        {
-            autoUpgrade4Counter *= 16;
-        }
-
-        autoUpgrade4Cost *= 24;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 16, 24);
     }
 
     public void PurchaseAutoUpgrade5()
     {
-        if (autoUpgrade5Counter == 0)
-        {
-            autoUpgrade5Counter = 1;
-        }
-
-        else if (autoUpgrade5Counter != 0)
-        {
-            autoUpgrade5Counter *= 32;
-        }
-
-        autoUpgrade5Cost *= 48;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 32, 48);
     }
 
     public void PurchaseAutoUpgrade6()
     {
-        if (autoUpgrade6Counter == 0)
-        {
-            autoUpgrade6Counter = 1;
-        }
-
-        else if (autoUpgrade6Counter != 0)
-        {
-            autoUpgrade6Counter *= 64;
-        }
-
-        autoUpgrade6Cost *= 96;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 64, 96);
     }
 
     public void PurchaseAutoUpgrade7()
     {
-        if (autoUpgrade7Counter == 0)
-        {
-            autoUpgrade7Counter = 1;
-        }
-
-        else if (autoUpgrade7Counter != 0)
-        {
-            autoUpgrade7Counter *= 128;
-        }
-
-        autoUpgrade7Cost *= 172;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 128, 172);
     }
 
     public void PurchaseAutoUpgrade8()
     {
-        if (autoUpgrade8Counter == 0)
-        {
-            autoUpgrade8Counter = 1;
-        }
-
-        else if (autoUpgrade8Counter != 0)
-        {
-            autoUpgrade8Counter *= 256;
-        }
-
-        autoUpgrade8Cost *= 344;
+        PurchaseAutoUpgradeTemp(autoUpgrade1Counter, autoUpgrade1Cost, 256, 344);
     }
 
     //---------------------------
@@ -416,7 +351,7 @@ public class GameScript : MonoBehaviour
 
     public void LDMButton()
     {
-        if (lDMButtonCheck == false)
+        if (!lDMButtonCheck)
         {
             scanLine.SetActive(false);
             buttonOffLDM.SetActive(false);
@@ -424,7 +359,7 @@ public class GameScript : MonoBehaviour
             lDMButtonCheck = true;
         }
 
-        else if (lDMButtonCheck == true)
+        else
         {
             scanLine.SetActive(true);
             buttonOnLDM.SetActive(false);
@@ -444,7 +379,7 @@ public class GameScript : MonoBehaviour
             musicButtonCheck = false;
         }
 
-        else if (musicButtonCheck == false)
+        else 
         {
             musicSource.SetActive(false);
             buttonOffMusic.SetActive(true);
@@ -701,7 +636,7 @@ public class GameScript : MonoBehaviour
             else if (settingsPanel.transform.position.y >= 1620)
             {
                 settingsCanvasExit = false;
-                settingsPanel.transform.position = new Vector4((1920 / 2), 1620, 0);
+                settingsPanel.transform.position = new Vector3((1920 / 2), 1620, 0);
 
             }
 

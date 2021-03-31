@@ -19,11 +19,25 @@ public class Music : MonoBehaviour
     public GameObject SamifyingNoraLastDanceText;
     public GameObject RandomMusicText;
 
+    float timer;
     int randomMusicPicker;
     int musicListInt = 0;
+    int randMusicListInt = 0;
+
+    void Start()
+    {
+        DeactivateMusic();
+    }
 
     void Update()
     {
+
+        timer += Time.deltaTime;
+
+        Debug.Log(timer);
+
+        Debug.Log(randMusicListInt);
+
         if (musicListInt <= -1)
         {
             musicListInt = 6;
@@ -68,24 +82,142 @@ public class Music : MonoBehaviour
 
             case 6:
                 RandomMusicText.SetActive(true);
+                
+                timer = 0;
+                RandomMusicFunction();
+
                 break;
         }
     }
 
 
-    void MusicButtonRight()
+    public void MusicButtonRight()
     {
-        musicListInt =+ 1;
+        DeactivateMusic();
+        musicListInt += +1;
     }
 
-    void MusicButtonLeft()
+    public void MusicButtonLeft()
     {
-        musicListInt =- 1;
+        DeactivateMusic();
+        musicListInt += -1;
     }
 
     void RandomMusicFunction()
     {
-        musicListInt = Random.Range(0, 6);
-    }
+        switch (randMusicListInt)
+        {
+            case 0:
+                if (timer < 240)
+                {
+                    CreoSphere.SetActive(true);
+                    CreoSphereText.SetActive(true);
+                }
+                
+                else if (timer >= 240)
+                {
+                    DeactivateMusic();
+                    RandomMusicFunction();
+                    randMusicListInt = Random.Range(0, 6);
+                    timer = 0;
+                }
+                break;
 
+            case 1:
+                if (timer < 271)
+                {
+                    CreoCarnivores.SetActive(true);
+                    CreoCarnivoresText.SetActive(true);
+                }
+
+                else if (timer >= 271)
+                {
+                    DeactivateMusic();
+                    RandomMusicFunction();
+                    randMusicListInt = Random.Range(0, 6);
+                    timer = 0;
+                }
+                break;
+
+            case 2:
+                if (timer < 303)
+                {
+                    CreoOutlaw.SetActive(true);
+                    CreoOutlawText.SetActive(true);
+                }
+
+                else if (timer >= 303)
+                {
+                    DeactivateMusic();
+                    RandomMusicFunction();
+                    randMusicListInt = Random.Range(0, 6);
+                    timer = 0;
+                }
+                break;
+
+            case 3:
+                if (timer < 237)
+                {
+                    CreoIdolize.SetActive(true);
+                    CreoIdolizeText.SetActive(true);
+                }
+
+                else if (timer >= 237)
+                {
+                    DeactivateMusic();
+                    RandomMusicFunction();
+                    randMusicListInt = Random.Range(0, 6);
+                    timer = 0;
+                }
+                break;
+
+            case 4:
+                if (timer < 233)
+                {
+                    CreoNeverMakeIt.SetActive(true);
+                    CreoNeverMakeItText.SetActive(true);
+                }
+
+                else if (timer >= 233)
+                {
+                    DeactivateMusic();
+                    RandomMusicFunction();
+                    randMusicListInt = Random.Range(0, 6);
+                    timer = 0;
+                }
+                break;
+
+            case 5:
+                if (timer < 150)
+                {
+                    SamifyingNoraLastDance.SetActive(true);
+                    SamifyingNoraLastDanceText.SetActive(true);
+                }
+
+                else if (timer >= 150)
+                {
+                    DeactivateMusic();
+                    RandomMusicFunction();
+                    randMusicListInt = Random.Range(0, 6);
+                    timer = 0;
+                }
+                break;
+        }
+    }
+    void DeactivateMusic()
+    {
+        CreoSphere.SetActive(false);
+        CreoSphereText.SetActive(false);
+        CreoCarnivores.SetActive(false);
+        CreoCarnivoresText.SetActive(false);
+        CreoOutlaw.SetActive(false);
+        CreoOutlawText.SetActive(false);
+        CreoIdolize.SetActive(false);
+        CreoIdolizeText.SetActive(false);
+        CreoNeverMakeIt.SetActive(false);
+        CreoNeverMakeItText.SetActive(false);
+        SamifyingNoraLastDance.SetActive(false);
+        SamifyingNoraLastDanceText.SetActive(false);
+        RandomMusicText.SetActive(false);
+    }
 }
