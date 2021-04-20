@@ -24,6 +24,8 @@ public class Music : MonoBehaviour
     int musicListInt = 0;
     int randMusicListInt = 0;
 
+    string url;
+
     void Start()
     {
         DeactivateMusic();
@@ -219,5 +221,12 @@ public class Music : MonoBehaviour
         SamifyingNoraLastDance.SetActive(false);
         SamifyingNoraLastDanceText.SetActive(false);
         RandomMusicText.SetActive(false);
+    }
+
+    public void DownloadSong()
+    {
+        url = "https://www.newgrounds.com/audio/download/467339";
+
+
     }
 }
