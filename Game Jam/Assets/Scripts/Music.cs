@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Music : MonoBehaviour
 {
@@ -19,16 +22,25 @@ public class Music : MonoBehaviour
     public GameObject SamifyingNoraLastDanceText;
     public GameObject RandomMusicText;
 
+    public InputField songIDInputField;
+
+    public string songID;
+    public string finalURL;
+
     float timer;
     int randomMusicPicker;
     int musicListInt = 0;
     int randMusicListInt = 0;
 
-    string url;
+    public string url;
+
+    public List<string> listOfSongIDs = new List<string>();
 
     void Start()
     {
         DeactivateMusic();
+        LoadGame();
+        Debug.Log(listOfSongIDs);
     }
 
     void Update()
@@ -36,9 +48,9 @@ public class Music : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        Debug.Log(timer);
+        //Debug.Log(timer);
 
-        Debug.Log(randMusicListInt);
+        //Debug.Log(randMusicListInt);
 
         if (musicListInt <= -1)
         {
@@ -225,8 +237,29 @@ public class Music : MonoBehaviour
 
     public void DownloadSong()
     {
-        url = "https://www.newgrounds.com/audio/download/467339";
+        url = "https://www.newgrounds.com/audio/download/";
+        songID = songIDInputField.text;
+        finalURL = (url + songID);
+        Debug.Log(finalURL);
+        string path = Application.persistentDataPath;
+        WebClient client = new WebClient();
+        client.DownloadFile(finalURL, @path + "/" + songID + ".mp3");
 
+        
+        listOfSongIDs.Add(songID);
+        //Debug.Log(listOfSongIDs[0]);
+        //SaveMusic();
 
+    }
+
+    public void SaveMusic()
+    {
+        SaveSystem.SaveMusic(this);
+    }
+
+    public void LoadGame()
+    {
+        //MusicData data = SaveSystem.LoadMusic();
+        //url = data.url;
     }
 }
