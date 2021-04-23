@@ -32,6 +32,12 @@ public class Music : MonoBehaviour
     int musicListInt = 0;
     int randMusicListInt = 0;
 
+    //List<string> Songs = new List<string>();
+
+    string[] Songs;
+
+    string filePath;
+
     public string url;
 
     public List<string> listOfSongIDs = new List<string>();
@@ -40,7 +46,7 @@ public class Music : MonoBehaviour
     {
         DeactivateMusic();
         LoadGame();
-        Debug.Log(listOfSongIDs);
+        
     }
 
     void Update()
@@ -249,6 +255,10 @@ public class Music : MonoBehaviour
         listOfSongIDs.Add(songID);
         //Debug.Log(listOfSongIDs[0]);
         //SaveMusic();
+        Debug.Log(listOfSongIDs);
+        Songs = Directory.GetFiles(Application.persistentDataPath, ".mp3");
+        filePath = Application.persistentDataPath + "  " + Songs;
+        Debug.Log(filePath);
 
     }
 
