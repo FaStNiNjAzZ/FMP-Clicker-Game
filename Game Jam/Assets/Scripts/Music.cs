@@ -24,8 +24,14 @@ public class Music : MonoBehaviour
 
     public InputField songIDInputField;
 
+    public Text downloadStatusText;
+
     public string songID;
     public string finalURL;
+
+    
+
+    bool fileExisting = false;
 
     float timer;
     int randomMusicPicker;
@@ -51,6 +57,7 @@ public class Music : MonoBehaviour
 
     void Update()
     {
+
 
         timer += Time.deltaTime;
 
@@ -243,14 +250,15 @@ public class Music : MonoBehaviour
 
     public void DownloadSong()
     {
+        SongExistCheck();
+        string path = Application.persistentDataPath;
         url = "https://www.newgrounds.com/audio/download/";
         songID = songIDInputField.text;
         finalURL = (url + songID);
         Debug.Log(finalURL);
-        string path = Application.persistentDataPath;
+        
         WebClient client = new WebClient();
         client.DownloadFile(finalURL, @path + "/" + songID + ".mp3");
-
         
         listOfSongIDs.Add(songID);
         //Debug.Log(listOfSongIDs[0]);
@@ -259,7 +267,27 @@ public class Music : MonoBehaviour
         Songs = Directory.GetFiles(Application.persistentDataPath, ".mp3");
         filePath = Application.persistentDataPath + "  " + Songs;
         Debug.Log(filePath);
+    }
 
+    public void SongExistCheck()
+    {
+        fileExisting = false;
+        songID = songIDInputField.text;
+        string path = Application.persistentDataPath;
+        string curFile = (@path + "/" + songID + ".mp3");
+        Debug.Log(curFile);
+        Debug.Log(File.Exists(curFile) ? fileExisting = true : fileExisting = false);
+        if (fileExisting == true)
+        {
+            downloadStatusText.text = ("Download Success!");
+            downloadStatusText.color = new Color(0.2f, 1f, 0.2f, 1f);
+        }
+
+        else if (fileExisting == false)
+        {
+            downloadStatusText.text = ("Download Failed!");
+            downloadStatusText.color = new Color(1f, 0.2f, 0.2f, 1f);
+        }
     }
 
     public void SaveMusic()
