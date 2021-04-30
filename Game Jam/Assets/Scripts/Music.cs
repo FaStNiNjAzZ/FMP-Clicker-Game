@@ -267,6 +267,8 @@ public class Music : MonoBehaviour
         Songs = Directory.GetFiles(Application.persistentDataPath, ".mp3");
         filePath = Application.persistentDataPath + "  " + Songs;
         Debug.Log(filePath);
+
+        SongExistCheck();
     }
 
     public void SongExistCheck()

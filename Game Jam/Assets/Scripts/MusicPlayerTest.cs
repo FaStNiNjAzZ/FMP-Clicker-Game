@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 //Don't forget to use System.IO
 public class MusicPlayerTest : MonoBehaviour
@@ -20,13 +21,15 @@ public class MusicPlayerTest : MonoBehaviour
     //List of all AudioClips
     List<AudioClip> Clips = new List<AudioClip>();
 
+    string[] files;
+
     public void Start()
     {
+        //File Location for .MP3
         FileDirectory = Application.persistentDataPath;
-        //Source = GetComponent<AudioSource>();
 
         //Grabs all files from FileDirectory
-        string[] files;
+        
         files = Directory.GetFiles(FileDirectory);
 
         //Checks all files and stores all WAV files into the Files list.
@@ -36,17 +39,23 @@ public class MusicPlayerTest : MonoBehaviour
             {
                 Files.Add(files[i]);
                 Clips.Add(new WWW(files[i]).GetAudioClip(false, true, AudioType.MPEG));
-
-                Clips.Add(UnityWebRequestMultimedia.GetAudioClip(files[i], AudioType.MPEG));
             }
         }
-        //Calls the below method
-        PlaySong(0);
     }
+
     public void PlaySong(int _listIndex)
     {
-        Clip = Clips[_listIndex];
-        Source.clip = Clip;
-        Source.Play();
+        if (!Source.isPlaying)
+        {
+            Clip = Clips[_listIndex];
+            Source.clip = Clip;
+            Source.Play();
+        } 
+    }
+
+    void Update()
+    {
+        var rand = UnityEngine.Random.Range(0, files.Length-1);
+        PlaySong(rand);
     }
 }
