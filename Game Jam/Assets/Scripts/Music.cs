@@ -64,7 +64,7 @@ public class Music : MonoBehaviour
         //Debug.Log(timer);
 
         //Debug.Log(randMusicListInt);
-
+        /*
         if (musicListInt <= -1)
         {
             musicListInt = 6;
@@ -113,8 +113,8 @@ public class Music : MonoBehaviour
                 timer = 0;
                 RandomMusicFunction();
 
-                break;
-        }
+                break;*/
+        //}
     }
 
 
