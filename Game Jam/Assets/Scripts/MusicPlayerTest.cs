@@ -5,21 +5,34 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System;
 
+//Don't forget to use System.IO
 public class MusicPlayerTest : MonoBehaviour
 {
-    public string FileDirectory = Application.persistentDataPath;
+    //Directory of folder to be searched anywhere on the computer
+    public string FileDirectory;
+
+    //Audio source
     public AudioSource Source;
+    //Current sound playing
     public AudioClip Clip;
 
+    //List of all valid directories
     List<string> Files = new List<string>();
+    //List of all AudioClips
     List<AudioClip> Clips = new List<AudioClip>();
 
     string[] files;
 
     public void Start()
     {
-        List<string> files = new List<AudioClip>(Directory.GetFiles(FileDirectory));
+        //File Location for .MP3
+        FileDirectory = Application.persistentDataPath;
 
+        //Grabs all files from FileDirectory
+        
+        files = Directory.GetFiles(FileDirectory);
+
+        //Checks all files and stores all WAV files into the Files list.
         for (int i = 0; i < files.Length; i++)
         {
             if (files[i].EndsWith(".mp3"))
@@ -42,7 +55,7 @@ public class MusicPlayerTest : MonoBehaviour
 
     void Update()
     {
-        var rand = UnityEngine.Random.Range(0, files.Length);
+        var rand = UnityEngine.Random.Range(0, files.Length-1);
         PlaySong(rand);
     }
 }
